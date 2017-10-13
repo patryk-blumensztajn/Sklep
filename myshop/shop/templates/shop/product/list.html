@@ -1,0 +1,79 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+{% if category %} {{ category.name }} {% else %}Produkty{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="sidebar">
+	<h3>Kategorie</h3>
+	<ul>
+		<li {% if not category %}class="selected"{% endif %}>
+			<a href="{% url "shop:product_list" %}">Wszystkie</a>
+		</li>
+		{% for c in categories %}
+		<li {% if category.slug == c.slug %}class="selected"{% endif %}>
+			
+			
+			
+			
+			<a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+			{% for d in subcategories %}
+			{% if d.category.name == c.name %}
+		<li {% if subcategory.slug == d.slug %}class="selected"{% endif %}>
+			<a href="{{ d.get_absolute_url }}">* {{ d.name }}</a>
+			
+			
+			
+			{% for f in subsubcategories %}
+			{% if f.subcategory.name == d.name %}
+		<li {% if subsubcategory.slug == f.slug %}class="selected"{% endif %}>
+			<a href="{{ f.get_absolute_url }}">*  *  {{ f.name }}</a>
+		</li>
+		{% endif %}
+		{% endfor %}
+			
+			
+			
+		</li>
+		{% endif %}
+		{% endfor %}
+		
+		</li>
+		{% endfor %}
+	
+	
+	
+	
+	
+		
+	</ul>
+</div>
+
+
+
+
+
+<div id="main" class="product-list">
+	<h1>{% if category %}{{ category.name }}{% else %}Produkty{% endif %}</h1>
+	{% for product in products %}
+	<div class="item">
+		<a href="{{ product.get_absolute_url }}">
+			<img height="200"  src="{% if product.image %} {{ product.image.url }} {% else %} {% static "img/no_image.png" %} {% endif %}">
+		</a>
+		<a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+		{{ product.price }} zł
+	</div>
+	{% endfor %}
+	</div>
+{% endblock %}
+
+	
+	
+	
+	
+	
+	
+	
+	
